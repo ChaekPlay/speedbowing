@@ -1,0 +1,115 @@
+[gd_scene load_steps=16 format=3 uid="uid://bao3l75rrbbyl"]
+
+[ext_resource type="Script" path="res://Scenes/GameManager.gd" id="1_gq1i2"]
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_o2dw6"]
+[ext_resource type="Script" path="res://Scenes/player_camera.gd" id="2_488hj"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eoiq8"]
+sky_top_color = Color(0.382373, 0.632831, 0.702125, 1)
+sky_horizon_color = Color(0.645593, 0.700458, 0.708781, 1)
+ground_horizon_color = Color(0.645593, 0.700458, 0.708781, 1)
+
+[sub_resource type="Sky" id="Sky_vr0x1"]
+sky_material = SubResource("ProceduralSkyMaterial_eoiq8")
+
+[sub_resource type="Environment" id="Environment_sqhy5"]
+background_mode = 2
+sky = SubResource("Sky_vr0x1")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mhdwb"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_02qb4"]
+size = Vector3(70, 1, 70)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_6pmmp"]
+data = PackedVector3Array(-35, 0.5, 35, 35, 0.5, 35, -35, -0.5, 35, 35, 0.5, 35, 35, -0.5, 35, -35, -0.5, 35, 35, 0.5, -35, -35, 0.5, -35, 35, -0.5, -35, -35, 0.5, -35, -35, -0.5, -35, 35, -0.5, -35, 35, 0.5, 35, 35, 0.5, -35, 35, -0.5, 35, 35, 0.5, -35, 35, -0.5, -35, 35, -0.5, 35, -35, 0.5, -35, -35, 0.5, 35, -35, -0.5, -35, -35, 0.5, 35, -35, -0.5, 35, -35, -0.5, -35, 35, 0.5, 35, -35, 0.5, 35, 35, 0.5, -35, -35, 0.5, 35, -35, 0.5, -35, 35, 0.5, -35, -35, -0.5, 35, 35, -0.5, 35, -35, -0.5, -35, 35, -0.5, 35, 35, -0.5, -35, -35, -0.5, -35)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_lmyow"]
+radius = 1.0
+height = 4.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1c4il"]
+radius = 1.18794
+height = 3.99138
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_yn5gf"]
+size = Vector2(4, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0pxlb"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_t10py"]
+material = SubResource("StandardMaterial3D_0pxlb")
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_q1mbe"]
+data = PackedVector3Array(-25, 0.5, 25, 25, 0.5, 25, -25, -0.5, 25, 25, 0.5, 25, 25, -0.5, 25, -25, -0.5, 25, 25, 0.5, -25, -25, 0.5, -25, 25, -0.5, -25, -25, 0.5, -25, -25, -0.5, -25, 25, -0.5, -25, 25, 0.5, 25, 25, 0.5, -25, 25, -0.5, 25, 25, 0.5, -25, 25, -0.5, -25, 25, -0.5, 25, -25, 0.5, -25, -25, 0.5, 25, -25, -0.5, -25, -25, 0.5, 25, -25, -0.5, 25, -25, -0.5, -25, 25, 0.5, 25, -25, 0.5, 25, 25, 0.5, -25, -25, 0.5, 25, -25, 0.5, -25, 25, 0.5, -25, -25, -0.5, 25, 25, -0.5, 25, -25, -0.5, -25, 25, -0.5, 25, 25, -0.5, -25, -25, -0.5, -25)
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_gq1i2")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_sqhy5")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.680721, -0.716535, 0.152304, 0, 0.207912, 0.978148, -0.732543, -0.665846, 0.14153, 0, 0, 0)
+shadow_enabled = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_mhdwb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_02qb4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_6pmmp")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+script = ExtResource("1_o2dw6")
+
+[node name="PlayerCamera" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.174251, 4.65454, -0.948717)
+current = true
+script = ExtResource("2_488hj")
+pitch = 0.05
+yaw = 0.05
+
+[node name="PlayerModel" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.71945, 0)
+mesh = SubResource("CapsuleMesh_lmyow")
+
+[node name="PlayerCollider" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.71945, 0)
+shape = SubResource("CapsuleShape3D_1c4il")
+
+[node name="UI" type="Control" parent="Player"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Player/UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("PlaceholderTexture2D_yn5gf")
+
+[node name="Red Cube" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_mhdwb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Red Cube"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.1009, 3.7356, 0)
+mesh = SubResource("BoxMesh_t10py")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Red Cube"]
+shape = SubResource("ConcavePolygonShape3D_q1mbe")
