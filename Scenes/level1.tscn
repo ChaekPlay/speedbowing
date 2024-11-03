@@ -56,13 +56,13 @@ environment = SubResource("Environment_sqhy5")
 transform = Transform3D(0.680721, -0.716535, 0.152304, 0, 0.207912, 0.978148, -0.732543, -0.665846, 0.14153, 0, 0, 0)
 shadow_enabled = true
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="Platform" type="StaticBody3D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_mhdwb")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform"]
 mesh = SubResource("BoxMesh_02qb4")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform"]
 shape = SubResource("ConcavePolygonShape3D_6pmmp")
 
 [node name="Player" type="CharacterBody3D" parent="."]
@@ -104,6 +104,13 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("PlaceholderTexture2D_yn5gf")
 
+[node name="DashTimer" type="Timer" parent="Player"]
+wait_time = 0.3
+one_shot = true
+
+[node name="DashCooldown" type="Timer" parent="Player"]
+one_shot = true
+
 [node name="Red Cube" type="StaticBody3D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_mhdwb")
 
@@ -113,3 +120,6 @@ mesh = SubResource("BoxMesh_t10py")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Red Cube"]
 shape = SubResource("ConcavePolygonShape3D_q1mbe")
+
+[connection signal="timeout" from="Player/DashTimer" to="Player" method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="Player/DashCooldown" to="Player" method="_on_dash_cooldown_timeout"]
