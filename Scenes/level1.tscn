@@ -60,6 +60,7 @@ transform = Transform3D(0.680721, -0.716535, 0.152304, 0, 0.207912, 0.978148, -0
 shadow_enabled = true
 
 [node name="Platform" type="StaticBody3D" parent="."]
+collision_mask = 6
 physics_material_override = SubResource("PhysicsMaterial_mhdwb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Platform"]
@@ -69,11 +70,13 @@ mesh = SubResource("BoxMesh_02qb4")
 shape = SubResource("ConcavePolygonShape3D_6pmmp")
 
 [node name="Player" type="CharacterBody3D" parent="."]
+collision_layer = 2
 script = ExtResource("1_o2dw6")
 
-[node name="Bow" parent="Player" node_paths=PackedStringArray("projectile_place") instance=ExtResource("3_8xt3t")]
+[node name="Bow" parent="Player" node_paths=PackedStringArray("camera", "projectile_place") instance=ExtResource("3_8xt3t")]
 transform = Transform3D(-0.724816, 5.84618e-08, 0.192723, 0.192723, -5.4373e-08, 0.724816, 7.04707e-08, 0.75, 3.75246e-08, 0.693978, 3.40334, -1.76056)
 script = ExtResource("4_5xd5v")
+camera = NodePath("../PlayerCamera")
 arrow = ExtResource("5_k46cx")
 projectile_place = NodePath("../../Projectiles")
 
@@ -121,6 +124,7 @@ one_shot = true
 one_shot = true
 
 [node name="Red Cube" type="StaticBody3D" parent="."]
+collision_mask = 6
 physics_material_override = SubResource("PhysicsMaterial_mhdwb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Red Cube"]

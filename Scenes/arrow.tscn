@@ -7,6 +7,7 @@
 size = Vector3(0.181244, 2.36816, 0.181091)
 
 [node name="Arrow" type="RigidBody3D"]
+collision_layer = 4
 script = ExtResource("1_cehqq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
