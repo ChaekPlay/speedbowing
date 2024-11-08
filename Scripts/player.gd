@@ -13,6 +13,7 @@ var can_dash = true
 var is_dashing = false
 var dash_vector = Vector3()
 var cam_vector = Vector3()
+var saved_y_velocity = 0
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -38,11 +39,13 @@ func _physics_process(delta: float) -> void:
 		print("dash")
 		can_dash = false
 		is_dashing = true
-		dash_vector = -player_camera.get_camera_transform().basis.z
+		dash_vector = -player_camera.global_transform.basis.z.normalized()
+		saved_y_velocity = velocity.y
 		dash_timer.start()
 	
 	if is_dashing:
 		velocity = dash_vector * DASH_SPEED
+		print(velocity)
 	elif direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
@@ -57,6 +60,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_dash_timer_timeout():
 	is_dashing = false
+	velocity.y = saved_y_velocity
 	print("cooldown")
 	dash_cooldown.start()
 

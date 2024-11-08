@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bao3l75rrbbyl"]
+[gd_scene load_steps=26 format=3 uid="uid://bao3l75rrbbyl"]
 
 [ext_resource type="Script" path="res://Scenes/GameManager.gd" id="1_gq1i2"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_o2dw6"]
@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://cve1hawhhkovs" path="res://Models/Bow/bow.blend" id="3_8xt3t"]
 [ext_resource type="Script" path="res://Scripts/bow.gd" id="4_5xd5v"]
 [ext_resource type="PackedScene" uid="uid://bqfdparvw0p5w" path="res://Scenes/arrow.tscn" id="5_k46cx"]
+[ext_resource type="Script" path="res://Scripts/puzzle.gd" id="7_uuett"]
+[ext_resource type="Script" path="res://Scripts/button.gd" id="8_oauxk"]
+[ext_resource type="Material" uid="uid://beijfqpwn4752" path="res://Materials/red_button.tres" id="9_g406g"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eoiq8"]
 sky_top_color = Color(0.382373, 0.632831, 0.702125, 1)
@@ -48,6 +51,19 @@ material = SubResource("StandardMaterial3D_0pxlb")
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_q1mbe"]
 data = PackedVector3Array(-25, 0.5, 25, 25, 0.5, 25, -25, -0.5, 25, 25, 0.5, 25, 25, -0.5, 25, -25, -0.5, 25, 25, 0.5, -25, -25, 0.5, -25, 25, -0.5, -25, -25, 0.5, -25, -25, -0.5, -25, 25, -0.5, -25, 25, 0.5, 25, 25, 0.5, -25, 25, -0.5, 25, 25, 0.5, -25, 25, -0.5, -25, 25, -0.5, 25, -25, 0.5, -25, -25, 0.5, 25, -25, -0.5, -25, -25, 0.5, 25, -25, -0.5, 25, -25, -0.5, -25, 25, 0.5, 25, -25, 0.5, 25, 25, 0.5, -25, -25, 0.5, 25, -25, 0.5, -25, 25, 0.5, -25, -25, -0.5, 25, 25, -0.5, 25, -25, -0.5, -25, 25, -0.5, 25, 25, -0.5, -25, -25, -0.5, -25)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_b3e6m"]
+height = 0.2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pi2vb"]
+material = ExtResource("9_g406g")
+height = 0.2
+
+[sub_resource type="BoxMesh" id="BoxMesh_47n03"]
+size = Vector3(5, 5, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a3jan"]
+size = Vector3(5, 5, 0.1)
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_gq1i2")
@@ -135,6 +151,34 @@ mesh = SubResource("BoxMesh_t10py")
 shape = SubResource("ConcavePolygonShape3D_q1mbe")
 
 [node name="Projectiles" type="Node" parent="."]
+
+[node name="Puzzle" type="Node" parent="." node_paths=PackedStringArray("buttons")]
+script = ExtResource("7_uuett")
+buttons = [NodePath("Button")]
+
+[node name="Button" type="StaticBody3D" parent="Puzzle" node_paths=PackedStringArray("mesh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0115819, 8.17003, 9.65627)
+collision_mask = 4
+script = ExtResource("8_oauxk")
+mesh = NodePath("MeshInstance3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Puzzle/Button"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.0102977, 0, -0.00111008)
+shape = SubResource("CylinderShape3D_b3e6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Puzzle/Button"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_pi2vb")
+
+[node name="Surface" type="StaticBody3D" parent="Puzzle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0831943, 8.17303, 9.77687)
+collision_mask = 4
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Puzzle/Surface"]
+mesh = SubResource("BoxMesh_47n03")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Puzzle/Surface"]
+shape = SubResource("BoxShape3D_a3jan")
 
 [connection signal="timeout" from="Player/DashTimer" to="Player" method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="Player/DashCooldown" to="Player" method="_on_dash_cooldown_timeout"]
