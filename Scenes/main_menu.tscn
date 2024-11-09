@@ -1,0 +1,262 @@
+[gd_scene load_steps=4 format=3 uid="uid://bf21h7hs037fs"]
+
+[ext_resource type="Script" path="res://Scripts/value_text.gd" id="1_7mwac"]
+[ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_qsbtb"]
+[ext_resource type="Script" path="res://Scripts/main_menu_button.gd" id="2_frkc6"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Main" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qsbtb")
+
+[node name="Label" type="Label" parent="Main"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -233.0
+offset_right = 233.0
+offset_bottom = 99.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 72
+text = "Speedbowing"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Main"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayButton" type="Button" parent="Main/VBoxContainer" node_paths=PackedStringArray("current_menu", "next_menu")]
+layout_mode = 2
+text = "Играть"
+script = ExtResource("2_frkc6")
+current_menu = NodePath("../..")
+next_menu = NodePath("../../../LevelSelect")
+
+[node name="SettingsButton" type="Button" parent="Main/VBoxContainer" node_paths=PackedStringArray("current_menu", "next_menu")]
+layout_mode = 2
+text = "Настройки"
+script = ExtResource("2_frkc6")
+current_menu = NodePath("../..")
+next_menu = NodePath("../../../Settings")
+
+[node name="QuitButton" type="Button" parent="Main/VBoxContainer"]
+layout_mode = 2
+text = "Выйти"
+
+[node name="Settings" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -61.5
+offset_right = 61.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 32
+
+[node name="SettingsH1" type="Label" parent="Settings/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 72
+text = "Настройки"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="SoundLabel" type="Label" parent="Settings/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Звуки"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SoundRange" type="HSlider" parent="Settings/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+max_value = 10.0
+value = 10.0
+
+[node name="ValueText" type="Label" parent="Settings/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "10"
+script = ExtResource("1_7mwac")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Settings/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="MusicLabel" type="Label" parent="Settings/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Музыка"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="MusicRange" type="HSlider" parent="Settings/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+max_value = 10.0
+value = 10.0
+
+[node name="ValueText" type="Label" parent="Settings/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "10
+"
+script = ExtResource("1_7mwac")
+
+[node name="BackButton" type="Button" parent="Settings/VBoxContainer" node_paths=PackedStringArray("current_menu", "next_menu")]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Назад"
+script = ExtResource("2_frkc6")
+current_menu = NodePath("../..")
+next_menu = NodePath("../../../Main")
+
+[node name="LevelSelect" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LevelSelect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -149.5
+offset_top = -42.5
+offset_right = 149.5
+offset_bottom = 42.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 32
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LevelSelect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Level1" type="VBoxContainer" parent="LevelSelect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="LevelSelect/VBoxContainer/HBoxContainer/Level1"]
+layout_mode = 2
+text = "Уровень 1"
+
+[node name="LevelName" type="Label" parent="LevelSelect/VBoxContainer/HBoxContainer/Level1"]
+layout_mode = 2
+text = "Платформы"
+
+[node name="RankLabel" type="Label" parent="LevelSelect/VBoxContainer/HBoxContainer/Level1"]
+layout_mode = 2
+text = "0:00.00 (-)"
+
+[node name="Level2" type="VBoxContainer" parent="LevelSelect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="LevelSelect/VBoxContainer/HBoxContainer/Level2"]
+layout_mode = 2
+disabled = true
+text = "Уровень 2"
+
+[node name="LevelName" type="Label" parent="LevelSelect/VBoxContainer/HBoxContainer/Level2"]
+layout_mode = 2
+text = "Платформы"
+
+[node name="RankLabel" type="Label" parent="LevelSelect/VBoxContainer/HBoxContainer/Level2"]
+layout_mode = 2
+text = "0:00.00 (-)"
+
+[node name="Level3" type="VBoxContainer" parent="LevelSelect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="LevelSelect/VBoxContainer/HBoxContainer/Level3"]
+layout_mode = 2
+disabled = true
+text = "Уровень 3"
+
+[node name="LevelName" type="Label" parent="LevelSelect/VBoxContainer/HBoxContainer/Level3"]
+layout_mode = 2
+text = "Платформы"
+
+[node name="RankLabel" type="Label" parent="LevelSelect/VBoxContainer/HBoxContainer/Level3"]
+layout_mode = 2
+text = "0:00.00 (-)"
+
+[node name="BackButton" type="Button" parent="LevelSelect/VBoxContainer" node_paths=PackedStringArray("current_menu", "next_menu")]
+layout_mode = 2
+text = "Назад"
+script = ExtResource("2_frkc6")
+current_menu = NodePath("../..")
+next_menu = NodePath("../../../Main")
+
+[node name="HeaderLabel" type="Label" parent="LevelSelect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -258.0
+offset_right = 258.0
+offset_bottom = 99.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 72
+text = "Выбор уровня"
+
+[connection signal="pressed" from="Main/VBoxContainer/PlayButton" to="Main/VBoxContainer/PlayButton" method="_on_pressed"]
+[connection signal="pressed" from="Main/VBoxContainer/SettingsButton" to="Main/VBoxContainer/SettingsButton" method="_on_pressed"]
+[connection signal="pressed" from="Main/VBoxContainer/QuitButton" to="Main" method="_on_quit_button_pressed"]
+[connection signal="value_changed" from="Settings/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/SoundRange" to="Settings/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/ValueText" method="_on_sound_range_value_changed"]
+[connection signal="value_changed" from="Settings/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/MusicRange" to="Settings/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/ValueText" method="_on_sound_range_value_changed"]
+[connection signal="pressed" from="Settings/VBoxContainer/BackButton" to="Settings/VBoxContainer/BackButton" method="_on_pressed"]
+[connection signal="pressed" from="LevelSelect/VBoxContainer/BackButton" to="LevelSelect/VBoxContainer/BackButton" method="_on_pressed"]
