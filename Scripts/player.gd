@@ -36,16 +36,20 @@ func _physics_process(delta: float) -> void:
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	if Input.is_action_just_pressed("dash") and can_dash:
-		print("dash")
+		#print("dash")
 		can_dash = false
 		is_dashing = true
-		dash_vector = -player_camera.global_transform.basis.z.normalized()
+		dash_vector = Vector3()
+		if input_dir.y != 0:
+			dash_vector += input_dir.y * player_camera.global_transform.basis.z.normalized()
+		if input_dir.x != 0:
+			dash_vector += input_dir.x * player_camera.global_transform.basis.x.normalized()
 		saved_y_velocity = velocity.y
 		dash_timer.start()
 	
 	if is_dashing:
 		velocity = dash_vector * DASH_SPEED
-		print(velocity)
+		#print(velocity)
 	elif direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
@@ -61,10 +65,10 @@ func _physics_process(delta: float) -> void:
 func _on_dash_timer_timeout():
 	is_dashing = false
 	velocity.y = saved_y_velocity
-	print("cooldown")
+	#print("cooldown")
 	dash_cooldown.start()
 
 
 func _on_dash_cooldown_timeout():
-	print("ready")
+	#print("ready")
 	can_dash = true

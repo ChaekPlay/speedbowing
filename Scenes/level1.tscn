@@ -99,6 +99,7 @@ projectile_place = NodePath("../../Projectiles")
 [node name="PlayerCamera" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.174251, 4.65454, -0.948717)
 current = true
+fov = 90.0
 script = ExtResource("2_488hj")
 pitch = 0.05
 yaw = 0.05
