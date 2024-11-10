@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://bf21h7hs037fs"]
+[gd_scene load_steps=6 format=3 uid="uid://bf21h7hs037fs"]
 
 [ext_resource type="Script" path="res://Scripts/value_text.gd" id="1_7mwac"]
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_qsbtb"]
 [ext_resource type="Script" path="res://Scripts/main_menu_button.gd" id="2_frkc6"]
+[ext_resource type="Script" path="res://Scripts/level_select.gd" id="4_mj7ja"]
+[ext_resource type="Script" path="res://Scripts/level_select_button.gd" id="5_xssrp"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -168,6 +170,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("4_mj7ja")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="LevelSelect"]
 layout_mode = 1
@@ -193,6 +196,8 @@ layout_mode = 2
 [node name="Button" type="Button" parent="LevelSelect/VBoxContainer/HBoxContainer/Level1"]
 layout_mode = 2
 text = "Уровень 1"
+script = ExtResource("5_xssrp")
+level_id = 1
 
 [node name="LevelName" type="Label" parent="LevelSelect/VBoxContainer/HBoxContainer/Level1"]
 layout_mode = 2
@@ -209,6 +214,8 @@ layout_mode = 2
 layout_mode = 2
 disabled = true
 text = "Уровень 2"
+script = ExtResource("5_xssrp")
+level_id = 2
 
 [node name="LevelName" type="Label" parent="LevelSelect/VBoxContainer/HBoxContainer/Level2"]
 layout_mode = 2
@@ -225,6 +232,8 @@ layout_mode = 2
 layout_mode = 2
 disabled = true
 text = "Уровень 3"
+script = ExtResource("5_xssrp")
+level_id = 3
 
 [node name="LevelName" type="Label" parent="LevelSelect/VBoxContainer/HBoxContainer/Level3"]
 layout_mode = 2
@@ -259,4 +268,8 @@ text = "Выбор уровня"
 [connection signal="value_changed" from="Settings/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/SoundRange" to="Settings/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/ValueText" method="_on_sound_range_value_changed"]
 [connection signal="value_changed" from="Settings/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/MusicRange" to="Settings/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/ValueText" method="_on_sound_range_value_changed"]
 [connection signal="pressed" from="Settings/VBoxContainer/BackButton" to="Settings/VBoxContainer/BackButton" method="_on_pressed"]
+[connection signal="level_selected" from="LevelSelect/VBoxContainer/HBoxContainer/Level1/Button" to="LevelSelect" method="_on_button_level_selected"]
+[connection signal="pressed" from="LevelSelect/VBoxContainer/HBoxContainer/Level1/Button" to="LevelSelect/VBoxContainer/HBoxContainer/Level1/Button" method="_on_pressed"]
+[connection signal="level_selected" from="LevelSelect/VBoxContainer/HBoxContainer/Level2/Button" to="LevelSelect" method="_on_button_level_selected"]
+[connection signal="level_selected" from="LevelSelect/VBoxContainer/HBoxContainer/Level3/Button" to="LevelSelect" method="_on_button_level_selected"]
 [connection signal="pressed" from="LevelSelect/VBoxContainer/BackButton" to="LevelSelect/VBoxContainer/BackButton" method="_on_pressed"]

@@ -1,5 +1,5 @@
 class_name Bow extends Node3D
-
+@export var player: Player
 @export var camera: PlayerCamera
 @export var arrow: PackedScene
 @export var projectile_place: Node
@@ -12,6 +12,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if player.freeze:
+			return
 	if Input.is_action_pressed("shoot"):
 		if current_power == max_power:
 			return

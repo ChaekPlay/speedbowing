@@ -1,6 +1,7 @@
 class_name Player extends CharacterBody3D
 
 @onready var player_camera: PlayerCamera = $PlayerCamera
+@onready var rank_camera: Camera3D = $RankScreenCamera
 @onready var dash_cooldown = $DashCooldown
 @onready var dash_timer = $DashTimer
 
@@ -14,14 +15,19 @@ var is_dashing = false
 var dash_vector = Vector3()
 var cam_vector = Vector3()
 var saved_y_velocity = 0
+var freeze = false
 
 func _input(event: InputEvent) -> void:
+	if freeze:
+		return
 	if event is InputEventMouseMotion:
 		cam_vector.y -= (event.relative.x * player_camera.yaw)
 		cam_vector.x -= (event.relative.y * player_camera.pitch)
 		cam_vector.x = clamp(cam_vector.x, -80, 90)
 
 func _physics_process(delta: float) -> void:
+	if freeze:
+		return
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta

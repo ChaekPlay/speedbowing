@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bao3l75rrbbyl"]
+[gd_scene load_steps=38 format=3 uid="uid://bao3l75rrbbyl"]
 
 [ext_resource type="Script" path="res://Scenes/GameManager.gd" id="1_gq1i2"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_o2dw6"]
@@ -6,9 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://cve1hawhhkovs" path="res://Models/Bow/bow.blend" id="3_8xt3t"]
 [ext_resource type="Script" path="res://Scripts/bow.gd" id="4_5xd5v"]
 [ext_resource type="PackedScene" uid="uid://bqfdparvw0p5w" path="res://Scenes/arrow.tscn" id="5_k46cx"]
+[ext_resource type="Script" path="res://Scripts/in_game_ui.gd" id="7_cgyxj"]
 [ext_resource type="Script" path="res://Scripts/puzzle.gd" id="7_uuett"]
 [ext_resource type="Script" path="res://Scripts/button.gd" id="8_oauxk"]
+[ext_resource type="Script" path="res://Scripts/rank_screen.gd" id="8_wf4ee"]
 [ext_resource type="Material" uid="uid://beijfqpwn4752" path="res://Materials/red_button.tres" id="9_g406g"]
+[ext_resource type="Script" path="res://Scripts/in_game_screen.gd" id="9_vpcqc"]
+[ext_resource type="Script" path="res://Scripts/finish_area.gd" id="10_4rx16"]
+[ext_resource type="Script" path="res://Scripts/gates.gd" id="10_h8axa"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eoiq8"]
 sky_top_color = Color(0.382373, 0.632831, 0.702125, 1)
@@ -65,6 +70,27 @@ size = Vector3(5, 5, 0.1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_a3jan"]
 size = Vector3(5, 5, 0.1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3anuy"]
+albedo_color = Color(0, 0.792445, 0.28977, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fcbv5"]
+material = SubResource("StandardMaterial3D_3anuy")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ikcpl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k7fda"]
+size = Vector3(6.54031, 2.9425, 11.5765)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yvvws"]
+albedo_color = Color(0.498039, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jlbjg"]
+material = SubResource("StandardMaterial3D_yvvws")
+size = Vector3(20, 10, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0h6ot"]
+size = Vector3(20, 10, 20)
+
 [node name="Game" type="Node3D"]
 script = ExtResource("1_gq1i2")
 
@@ -89,9 +115,10 @@ shape = SubResource("ConcavePolygonShape3D_6pmmp")
 collision_layer = 2
 script = ExtResource("1_o2dw6")
 
-[node name="Bow" parent="Player" node_paths=PackedStringArray("camera", "projectile_place") instance=ExtResource("3_8xt3t")]
+[node name="Bow" parent="Player" node_paths=PackedStringArray("player", "camera", "projectile_place") instance=ExtResource("3_8xt3t")]
 transform = Transform3D(-0.724816, 5.84618e-08, 0.192723, 0.192723, -5.4373e-08, 0.724816, 7.04707e-08, 0.75, 3.75246e-08, 0.693978, 3.40334, -1.76056)
 script = ExtResource("4_5xd5v")
+player = NodePath("..")
 camera = NodePath("../PlayerCamera")
 arrow = ExtResource("5_k46cx")
 projectile_place = NodePath("../../Projectiles")
@@ -112,6 +139,9 @@ mesh = SubResource("CapsuleMesh_lmyow")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.71945, 0)
 shape = SubResource("CapsuleShape3D_1c4il")
 
+[node name="RankScreenCamera" type="Camera3D" parent="Player"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.85414, 4.46857, -5.57614)
+
 [node name="UI" type="Control" parent="Player"]
 layout_mode = 3
 anchors_preset = 15
@@ -119,19 +149,91 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("7_cgyxj")
 
-[node name="TextureRect" type="TextureRect" parent="Player/UI"]
+[node name="RankScreen" type="Control" parent="Player/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_wf4ee")
+
+[node name="ColorRect" type="ColorRect" parent="Player/UI/RankScreen"]
+layout_mode = 2
+offset_right = 381.0
+offset_bottom = 648.0
+color = Color(0, 0.396078, 1, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Player/UI/RankScreen/ColorRect"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -30.5
+offset_top = -25.0
+offset_right = 30.5
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FinalTimeLabel" type="Label" parent="Player/UI/RankScreen/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Время: 0:00.00"
+
+[node name="Label" type="Label" parent="Player/UI/RankScreen/ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Ранк: A"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Player/UI/RankScreen/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="NextButton" type="Button" parent="Player/UI/RankScreen/ColorRect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "Далее"
+
+[node name="QuitButton" type="Button" parent="Player/UI/RankScreen/ColorRect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Выйти"
+
+[node name="InGame" type="Control" parent="Player/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_vpcqc")
+
+[node name="TextureRect" type="TextureRect" parent="Player/UI/InGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("PlaceholderTexture2D_yn5gf")
+
+[node name="LevelTimeLabel" type="Label" parent="Player/UI/InGame"]
+layout_mode = 0
+offset_right = 183.0
+offset_bottom = 51.0
+theme_override_font_sizes/font_size = 36
+text = "Время: 0:00.00"
 
 [node name="DashTimer" type="Timer" parent="Player"]
 wait_time = 0.3
@@ -153,33 +255,66 @@ shape = SubResource("ConcavePolygonShape3D_q1mbe")
 
 [node name="Projectiles" type="Node" parent="."]
 
-[node name="Puzzle" type="Node" parent="." node_paths=PackedStringArray("buttons")]
+[node name="ButtonPuzzle" type="Node" parent="." node_paths=PackedStringArray("buttons")]
 script = ExtResource("7_uuett")
 buttons = [NodePath("Button")]
 
-[node name="Button" type="StaticBody3D" parent="Puzzle" node_paths=PackedStringArray("mesh")]
+[node name="Button" type="StaticBody3D" parent="ButtonPuzzle" node_paths=PackedStringArray("mesh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0115819, 8.17003, 9.65627)
 collision_mask = 4
 script = ExtResource("8_oauxk")
 mesh = NodePath("MeshInstance3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Puzzle/Button"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ButtonPuzzle/Button"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.0102977, 0, -0.00111008)
 shape = SubResource("CylinderShape3D_b3e6m")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Puzzle/Button"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ButtonPuzzle/Button"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 mesh = SubResource("CylinderMesh_pi2vb")
 
-[node name="Surface" type="StaticBody3D" parent="Puzzle"]
+[node name="Surface" type="StaticBody3D" parent="ButtonPuzzle"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0831943, 8.17303, 9.77687)
 collision_mask = 4
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Puzzle/Surface"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ButtonPuzzle/Surface"]
 mesh = SubResource("BoxMesh_47n03")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Puzzle/Surface"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ButtonPuzzle/Surface"]
 shape = SubResource("BoxShape3D_a3jan")
 
+[node name="GreenCube" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.0381, 1.04227, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GreenCube"]
+mesh = SubResource("BoxMesh_fcbv5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GreenCube"]
+shape = SubResource("BoxShape3D_ikcpl")
+
+[node name="FinishArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.9741, 0, 0)
+collision_mask = 2
+script = ExtResource("10_4rx16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FinishArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.223774, 2.11625, -2.61618)
+shape = SubResource("BoxShape3D_k7fda")
+
+[node name="Gates" type="AnimatableBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.4488, 4.95409, 0)
+script = ExtResource("10_h8axa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Gates"]
+mesh = SubResource("BoxMesh_jlbjg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Gates"]
+shape = SubResource("BoxShape3D_0h6ot")
+
+[connection signal="finished" from="." to="Player/UI" method="_on_game_finished"]
+[connection signal="pressed" from="Player/UI/RankScreen/ColorRect/VBoxContainer/HBoxContainer/NextButton" to="Player/UI/RankScreen" method="_on_next_button_pressed"]
+[connection signal="pressed" from="Player/UI/RankScreen/ColorRect/VBoxContainer/HBoxContainer/QuitButton" to="Player/UI/RankScreen" method="_on_quit_button_pressed"]
 [connection signal="timeout" from="Player/DashTimer" to="Player" method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="Player/DashCooldown" to="Player" method="_on_dash_cooldown_timeout"]
+[connection signal="puzzle_solved" from="ButtonPuzzle" to="Gates" method="_on_puzzle_solved"]
+[connection signal="body_entered" from="FinishArea" to="." method="_on_finish_area_body_entered"]

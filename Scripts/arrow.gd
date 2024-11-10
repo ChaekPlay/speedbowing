@@ -1,5 +1,6 @@
 class_name Arrow extends RigidBody3D
 
+@onready var dissapear_timer: Timer = $DissapearTimer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -13,6 +14,12 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node) -> void:
 	print("collision")
+	freeze = true
 	if body is PuzzleButton:
 		print("arrow hit a button")
 		body.activated.emit(body)
+	dissapear_timer.start()
+
+
+func _on_dissapear_timer_timeout() -> void:
+	queue_free()
