@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bao3l75rrbbyl"]
+[gd_scene load_steps=39 format=3 uid="uid://bao3l75rrbbyl"]
 
 [ext_resource type="Script" path="res://Scenes/GameManager.gd" id="1_gq1i2"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_o2dw6"]
@@ -13,6 +13,7 @@
 [ext_resource type="Material" uid="uid://beijfqpwn4752" path="res://Materials/red_button.tres" id="9_g406g"]
 [ext_resource type="Script" path="res://Scripts/in_game_screen.gd" id="9_vpcqc"]
 [ext_resource type="Script" path="res://Scripts/finish_area.gd" id="10_4rx16"]
+[ext_resource type="Script" path="res://Scripts/pause_screen.gd" id="10_ds8jh"]
 [ext_resource type="Script" path="res://Scripts/gates.gd" id="10_h8axa"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eoiq8"]
@@ -235,6 +236,65 @@ offset_bottom = 51.0
 theme_override_font_sizes/font_size = 36
 text = "Время: 0:00.00"
 
+[node name="PauseScreen" type="Control" parent="Player/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("10_ds8jh")
+
+[node name="ColorRect" type="ColorRect" parent="Player/UI/PauseScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -254.0
+offset_top = -161.5
+offset_right = 254.0
+offset_bottom = 161.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.317647)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Player/UI/PauseScreen/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.0
+offset_top = -58.5
+offset_right = 63.0
+offset_bottom = 58.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="ResumeText" type="Label" parent="Player/UI/PauseScreen/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Пауза"
+
+[node name="ResumeButton" type="Button" parent="Player/UI/PauseScreen/ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Продолжить"
+
+[node name="ExitButton" type="Button" parent="Player/UI/PauseScreen/ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Выйти в меню"
+
 [node name="DashTimer" type="Timer" parent="Player"]
 wait_time = 0.3
 one_shot = true
@@ -314,6 +374,9 @@ shape = SubResource("BoxShape3D_0h6ot")
 [connection signal="finished" from="." to="Player/UI" method="_on_game_finished"]
 [connection signal="pressed" from="Player/UI/RankScreen/ColorRect/VBoxContainer/HBoxContainer/NextButton" to="Player/UI/RankScreen" method="_on_next_button_pressed"]
 [connection signal="pressed" from="Player/UI/RankScreen/ColorRect/VBoxContainer/HBoxContainer/QuitButton" to="Player/UI/RankScreen" method="_on_quit_button_pressed"]
+[connection signal="pause_toggled" from="Player/UI/PauseScreen" to="Player/UI" method="_on_pause_screen_pause_toggled"]
+[connection signal="pressed" from="Player/UI/PauseScreen/ColorRect/VBoxContainer/ResumeButton" to="Player/UI/PauseScreen" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="Player/UI/PauseScreen/ColorRect/VBoxContainer/ExitButton" to="Player/UI/PauseScreen" method="_on_exit_button_pressed"]
 [connection signal="timeout" from="Player/DashTimer" to="Player" method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="Player/DashCooldown" to="Player" method="_on_dash_cooldown_timeout"]
 [connection signal="puzzle_solved" from="ButtonPuzzle" to="Gates" method="_on_puzzle_solved"]
