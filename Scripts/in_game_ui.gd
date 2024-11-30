@@ -1,32 +1,54 @@
-extends Control
+class_name InGameUI extends Control
 
-@onready var in_game_ui: InGameScreen = $InGame
-@onready var rank_screen: RankScreen = $RankScreen
-@onready var pause_screen: PauseScreen = $PauseScreen
-# Called when the node enters the scene tree for the first time.
+@onready var in_game_screen: Control = $InGame
+@onready var rank_screen: Control = $RankScreen
+@onready var pause_screen: Control = $PauseScreen
+@onready var final_time_label: Label = $RankScreen/ColorRect/VBoxContainer/FinalTimeLabel
+@onready var level_time_label: Label = $InGame/LevelTimeLabel
+@onready var power_bar: TextureProgressBar = $InGame/PowerBar
+@onready var dash_bar: TextureProgressBar = $InGame/DashBar
+
+signal quitPressed
+signal nextLevelPressed
+signal resumePressed
+signal resetPressed
+
 func _ready() -> void:
-	process_mode = Node.PROCESS_MODE_ALWAYS
+	level_time_label.text = "Время: "+str("%2d.%03d" % [0,0])
 
-func toggle_pause():
-	in_game_ui.counting = !in_game_ui.counting
-	get_tree().paused = !get_tree().paused
-	pause_screen.visible = !pause_screen.visible
-	if pause_screen.visible:
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	else:
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("pause"):
-		toggle_pause()
+func set_new_power_value(value: float):
+	power_bar.value = value
+
+func add_dash_cooldown_percent(value: float):
+	dash_bar.value += value
 	
 
+func set_new_dash_cooldown_percent(value:float):
+	dash_bar.value = value
 
-func _on_game_finished() -> void:
-	in_game_ui.counting = false
-	in_game_ui.hide()
-	rank_screen.final_time_label.text = in_game_ui.level_time_label.text
-	rank_screen.show()
+func set_current_level_time(time: float):
+	var milliseconds = "%.3f" % time
+	level_time_label.text = "Время: "+str("%2d.%03d" % [time,int(time * 1000) % 1000])
 
-func _on_pause_screen_pause_toggled() -> void:
-	toggle_pause()
+func finish_level():
+	final_time_label.text = level_time_label.text
+	switch_screen(in_game_screen, rank_screen)
+
+func switch_screen(screen1: Control, screen2: Control):
+	screen1.hide()
+	screen2.show()
+
+
+func _on_next_button_pressed() -> void:
+	nextLevelPressed.emit()
+
+
+func _on_quit_button_pressed() -> void:
+	quitPressed.emit()
+
+
+func _on_resume_button_pressed() -> void:
+	resumePressed.emit()
+
+func _on_reset_button_pressed() -> void:
+	resetPressed.emit()

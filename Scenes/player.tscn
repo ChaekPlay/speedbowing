@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhoby5ehmuk3j"]
+
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_mxumx"]
+[ext_resource type="Script" path="res://Scenes/player_camera.gd" id="5_dlc45"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_lmyow"]
+radius = 1.0
+height = 4.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1c4il"]
+radius = 1.18794
+height = 3.99138
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_mxumx")
+
+[node name="PlayerCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.174251, 4.65454, -0.948717)
+current = true
+fov = 90.0
+script = ExtResource("5_dlc45")
+pitch = 0.05
+yaw = 0.05
+
+[node name="PlayerModel" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.71945, 0)
+mesh = SubResource("CapsuleMesh_lmyow")
+
+[node name="PlayerCollider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.71945, 0)
+shape = SubResource("CapsuleShape3D_1c4il")
+
+[node name="RankScreenCamera" type="Camera3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.85414, 4.46857, -5.57614)
+
+[node name="DashTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="DashCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="DashUpdateTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
+[connection signal="timeout" from="DashUpdateTimer" to="." method="_on_dash_update_timer_timeout"]

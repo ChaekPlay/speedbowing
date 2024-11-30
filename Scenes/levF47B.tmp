@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/puzzle.gd" id="7_uuett"]
 [ext_resource type="Script" path="res://Scripts/button.gd" id="8_oauxk"]
 [ext_resource type="Material" uid="uid://beijfqpwn4752" path="res://Materials/red_button.tres" id="9_g406g"]
-[ext_resource type="Texture2D" uid="uid://twdyoecao4nw" path="res://Textures/Valve_1m x 1m.png" id="10_6jtbo"]
+[ext_resource type="Texture2D" uid="uid://twdyoecao4nw" path="res://Materials/Valve_1m x 1m.png" id="10_6jtbo"]
 [ext_resource type="Script" path="res://Scripts/gates.gd" id="10_h8axa"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eoiq8"]
@@ -55,21 +55,6 @@ size = Vector3(20, 10, 20)
 [sub_resource type="BoxShape3D" id="BoxShape3D_0h6ot"]
 size = Vector3(20, 10, 20)
 
-[sub_resource type="Animation" id="Animation_f05dl"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(21.4488, 4.95409, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_l3ead"]
 resource_name = "gate_open"
 tracks/0/type = "value"
@@ -83,6 +68,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(21.4488, 4.95409, 0), Vector3(21.4488, 21.3425, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_f05dl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(21.4488, 4.95409, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i11ao"]
@@ -165,10 +165,8 @@ shape = SubResource("BoxShape3D_a3jan")
 [node name="LevelDecorations" type="Node" parent="."]
 
 [node name="StartPlatform" type="CSGCombiner3D" parent="LevelDecorations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.908, -1.00421, -0.117937)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -102.602, -1.00421, -0.117937)
 material_override = SubResource("StandardMaterial3D_y7ka5")
-use_collision = true
-collision_mask = 2
 
 [node name="CSGBox3D" type="CSGBox3D" parent="LevelDecorations/StartPlatform"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.732525, 2.66216, -0.0870018)
@@ -240,8 +238,6 @@ collision_mask = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LevelDecorations/DeathArea"]
 shape = SubResource("WorldBoundaryShape3D_yq5pp")
 
-[connection signal="dash_cooldown_changed" from="Player" to="Player/UI" method="set_new_dash_cooldown_percent"]
-[connection signal="dash_cooldown_percent_added" from="Player" to="Player/UI" method="add_dash_cooldown_percent"]
 [connection signal="power_changed" from="Player/Bow" to="Player/UI" method="set_new_power_value"]
 [connection signal="nextLevelPressed" from="Player/UI" to="." method="next_level"]
 [connection signal="quitPressed" from="Player/UI" to="." method="main_menu"]

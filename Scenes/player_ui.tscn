@@ -1,0 +1,216 @@
+[gd_scene load_steps=10 format=3 uid="uid://c120a378ec0ar"]
+
+[ext_resource type="Script" path="res://Scripts/in_game_ui.gd" id="1_v235v"]
+[ext_resource type="Texture2D" uid="uid://xwvrb2ir6vec" path="res://Textures/crosshair.png" id="2_as0ai"]
+[ext_resource type="Texture2D" uid="uid://bw1x2e6yaur1p" path="res://Textures/empty bow power bar.png" id="3_8e0gc"]
+[ext_resource type="Texture2D" uid="uid://ctyho5j3w4bo" path="res://Textures/fill power bar.png" id="4_anksj"]
+[ext_resource type="Texture2D" uid="uid://dt3mw5rd6aedv" path="res://Textures/dash_empty.png" id="5_3kj26"]
+[ext_resource type="Texture2D" uid="uid://c8xhof8f4axqa" path="res://Textures/dash_filled.png" id="6_gaqsx"]
+
+[sub_resource type="Gradient" id="Gradient_ndsow"]
+offsets = PackedFloat32Array(0, 0.650602, 1)
+colors = PackedColorArray(0.431285, 0.611584, 1, 1, 0.446599, 0.542508, 0.950186, 1, 0, 0, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qv3ne"]
+noise_type = 0
+frequency = 0.3356
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6xd8i"]
+color_ramp = SubResource("Gradient_ndsow")
+noise = SubResource("FastNoiseLite_qv3ne")
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v235v")
+
+[node name="RankScreen" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="TextureRect" parent="RankScreen"]
+self_modulate = Color(1, 1, 1, 0.341176)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 480.0
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_6xd8i")
+expand_mode = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RankScreen/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.5
+offset_top = -25.0
+offset_right = 30.5
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FinalTimeLabel" type="Label" parent="RankScreen/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Время: 0:00.00"
+
+[node name="Label" type="Label" parent="RankScreen/ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Ранк: A"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="RankScreen/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="NextButton" type="Button" parent="RankScreen/ColorRect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "Далее"
+
+[node name="QuitButton" type="Button" parent="RankScreen/ColorRect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Выйти"
+
+[node name="InGame" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="InGame"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_as0ai")
+
+[node name="LevelTimeLabel" type="Label" parent="InGame"]
+layout_mode = 0
+offset_right = 183.0
+offset_bottom = 51.0
+theme_override_font_sizes/font_size = 36
+text = "Время: 0:00.00"
+
+[node name="PowerBar" type="TextureProgressBar" parent="InGame"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 34.0
+offset_top = -205.0
+offset_right = 108.0
+offset_bottom = 128.0
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+fill_mode = 3
+texture_under = ExtResource("3_8e0gc")
+texture_progress = ExtResource("4_anksj")
+
+[node name="DashBar" type="TextureProgressBar" parent="InGame"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 95.0
+offset_top = -108.0
+offset_right = 296.0
+offset_bottom = 93.0
+grow_vertical = 0
+scale = Vector2(0.33, 0.33)
+value = 100.0
+fill_mode = 4
+texture_under = ExtResource("5_3kj26")
+texture_progress = ExtResource("6_gaqsx")
+
+[node name="PauseScreen" type="Control" parent="."]
+process_mode = 2
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="PauseScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -254.0
+offset_top = -161.5
+offset_right = 254.0
+offset_bottom = 161.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.317647)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseScreen/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.0
+offset_top = -58.5
+offset_right = 63.0
+offset_bottom = 58.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="ResumeText" type="Label" parent="PauseScreen/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Пауза"
+
+[node name="ResumeButton" type="Button" parent="PauseScreen/ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Продолжить"
+
+[node name="ResetButton" type="Button" parent="PauseScreen/ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Перезапуск уровня"
+
+[node name="QuitButton" type="Button" parent="PauseScreen/ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Выйти в меню"
+
+[connection signal="pressed" from="RankScreen/ColorRect/VBoxContainer/HBoxContainer/NextButton" to="." method="_on_next_button_pressed"]
+[connection signal="pressed" from="RankScreen/ColorRect/VBoxContainer/HBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="PauseScreen/ColorRect/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseScreen/ColorRect/VBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="PauseScreen/ColorRect/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
