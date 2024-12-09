@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bao3l75rrbbyl"]
+[gd_scene load_steps=31 format=3 uid="uid://bao3l75rrbbyl"]
 
 [ext_resource type="Script" path="res://Scenes/GameManager.gd" id="1_gq1i2"]
 [ext_resource type="PackedScene" uid="uid://dhoby5ehmuk3j" path="res://Scenes/player.tscn" id="2_yykpr"]
@@ -50,10 +50,10 @@ albedo_color = Color(0.498039, 1, 1, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_jlbjg"]
 material = SubResource("StandardMaterial3D_yvvws")
-size = Vector3(20, 10, 20)
+size = Vector3(1, 8, 10)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_0h6ot"]
-size = Vector3(20, 10, 20)
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_24xj1"]
+data = PackedVector3Array(-0.5, 4, 5, 0.5, 4, 5, -0.5, -4, 5, 0.5, 4, 5, 0.5, -4, 5, -0.5, -4, 5, 0.5, 4, -5, -0.5, 4, -5, 0.5, -4, -5, -0.5, 4, -5, -0.5, -4, -5, 0.5, -4, -5, 0.5, 4, 5, 0.5, 4, -5, 0.5, -4, 5, 0.5, 4, -5, 0.5, -4, -5, 0.5, -4, 5, -0.5, 4, -5, -0.5, 4, 5, -0.5, -4, -5, -0.5, 4, 5, -0.5, -4, 5, -0.5, -4, -5, 0.5, 4, 5, -0.5, 4, 5, 0.5, 4, -5, -0.5, 4, 5, -0.5, 4, -5, 0.5, 4, -5, -0.5, -4, 5, 0.5, -4, 5, -0.5, -4, -5, 0.5, -4, 5, 0.5, -4, -5, -0.5, -4, -5)
 
 [sub_resource type="Animation" id="Animation_f05dl"]
 length = 0.001
@@ -67,7 +67,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(21.4488, 4.95409, 0)]
+"values": [Vector3(-5.18561, 4.20799, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_l3ead"]
@@ -82,7 +82,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(21.4488, 4.95409, 0), Vector3(21.4488, 21.3425, 0)]
+"values": [Vector3(-5.18561, 4.20799, 0), Vector3(-5.18561, 13.7479, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i11ao"]
@@ -91,19 +91,19 @@ _data = {
 "gate_open": SubResource("Animation_l3ead")
 }
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mhdwb"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_02qb4"]
-size = Vector3(70, 1, 70)
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_6pmmp"]
-data = PackedVector3Array(-35, 0.5, 35, 35, 0.5, 35, -35, -0.5, 35, 35, 0.5, 35, 35, -0.5, 35, -35, -0.5, 35, 35, 0.5, -35, -35, 0.5, -35, 35, -0.5, -35, -35, 0.5, -35, -35, -0.5, -35, 35, -0.5, -35, 35, 0.5, 35, 35, 0.5, -35, 35, -0.5, 35, 35, 0.5, -35, 35, -0.5, -35, 35, -0.5, 35, -35, 0.5, -35, -35, 0.5, 35, -35, -0.5, -35, -35, 0.5, 35, -35, -0.5, 35, -35, -0.5, -35, 35, 0.5, 35, -35, 0.5, 35, 35, 0.5, -35, -35, 0.5, 35, -35, 0.5, -35, 35, 0.5, -35, -35, -0.5, 35, 35, -0.5, 35, -35, -0.5, -35, 35, -0.5, 35, 35, -0.5, -35, -35, -0.5, -35)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_k7fda"]
-size = Vector3(6.54031, 2.9425, 11.5765)
+size = Vector3(4.58021, 7.06207, 11.7471)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4c5vy"]
-size = Vector3(39.6472, 8.04218, 2.30762)
+size = Vector3(1.5, 8, 16.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4npdo"]
+transparency = 1
+albedo_color = Color(0.564706, 0.984314, 0.929412, 0.192157)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wcl4m"]
+material = SubResource("StandardMaterial3D_4npdo")
+size = Vector3(1.5, 8, 16.5)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_yq5pp"]
 
@@ -119,8 +119,9 @@ environment = SubResource("Environment_sqhy5")
 transform = Transform3D(0.680721, -0.716535, 0.152304, 0, 0.207912, 0.978148, -0.732543, -0.665846, 0.14153, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Player" parent="." instance=ExtResource("2_yykpr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 31.8422)
+[node name="Player" parent="." node_paths=PackedStringArray("player_start_marker") instance=ExtResource("2_yykpr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.1322, -0.330496, 0)
+player_start_marker = NodePath("../PlayerStartPosition")
 
 [node name="Bow" parent="Player" node_paths=PackedStringArray("player", "projectile_place") instance=ExtResource("3_8xt3t")]
 transform = Transform3D(-0.724816, 5.84618e-08, 0.192723, 0.192723, -5.4373e-08, 0.724816, 7.04707e-08, 0.75, 3.75246e-08, 0.693978, 3.40334, -1.76056)
@@ -139,7 +140,7 @@ script = ExtResource("7_uuett")
 buttons = [NodePath("Button")]
 
 [node name="Button" type="StaticBody3D" parent="ButtonPuzzle" node_paths=PackedStringArray("mesh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0115819, 8.17003, 9.65627)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.35289, 8.17003, 9.65627)
 collision_mask = 4
 script = ExtResource("8_oauxk")
 mesh = NodePath("MeshInstance3D")
@@ -153,7 +154,7 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 
 mesh = SubResource("CylinderMesh_pi2vb")
 
 [node name="Surface" type="StaticBody3D" parent="ButtonPuzzle"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0831943, 8.17303, 9.77687)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25811, 8.17303, 9.77687)
 collision_mask = 4
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ButtonPuzzle/Surface"]
@@ -165,10 +166,10 @@ shape = SubResource("BoxShape3D_a3jan")
 [node name="LevelDecorations" type="Node" parent="."]
 
 [node name="StartPlatform" type="CSGCombiner3D" parent="LevelDecorations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.908, -1.00421, -0.117937)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 12.5113, -1.00421, -0.117937)
 material_override = SubResource("StandardMaterial3D_y7ka5")
 use_collision = true
-collision_mask = 2
+collision_mask = 6
 
 [node name="CSGBox3D" type="CSGBox3D" parent="LevelDecorations/StartPlatform"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.732525, 2.66216, -0.0870018)
@@ -192,46 +193,56 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.30284, 8.05079, -0.0870018
 size = Vector3(6.95118, 0.290192, 14.0209)
 
 [node name="Gates" type="AnimatableBody3D" parent="LevelDecorations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.4488, 4.95409, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.18561, 4.20799, 0)
 script = ExtResource("10_h8axa")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="LevelDecorations/Gates"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.111118, 0.224607, -0.113113)
 mesh = SubResource("BoxMesh_jlbjg")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LevelDecorations/Gates"]
-shape = SubResource("BoxShape3D_0h6ot")
+shape = SubResource("ConcavePolygonShape3D_24xj1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="LevelDecorations/Gates"]
 libraries = {
 "": SubResource("AnimationLibrary_i11ao")
 }
 
-[node name="Platform" type="StaticBody3D" parent="LevelDecorations"]
-collision_mask = 6
-physics_material_override = SubResource("PhysicsMaterial_mhdwb")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="LevelDecorations/Platform"]
-mesh = SubResource("BoxMesh_02qb4")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelDecorations/Platform"]
-shape = SubResource("ConcavePolygonShape3D_6pmmp")
-
 [node name="FinishArea" type="Area3D" parent="LevelDecorations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.9741, 2.26534, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.6234, 6.53545, -0.129375)
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LevelDecorations/FinishArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.980049, -2.05978, 0.0853062)
 shape = SubResource("BoxShape3D_k7fda")
 
 [node name="EndPlatform" type="CSGCombiner3D" parent="LevelDecorations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.2767, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.2055, 4.55426, 0)
+use_collision = true
+collision_mask = 6
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="LevelDecorations/EndPlatform"]
+radius = 8.45639
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="LevelDecorations/EndPlatform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.55063, -0.2146, -0.101477)
+size = Vector3(11.884, 8.97119, 13.1784)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="LevelDecorations/EndPlatform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.49974, -0.535614, 0)
+operation = 2
+size = Vector3(19.2788, 7.87311, 8.95699)
 
 [node name="StartArea" type="Area3D" parent="LevelDecorations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.42221, 2.83838, 0)
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LevelDecorations/StartArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29773, 3.52109, 22.0852)
 shape = SubResource("BoxShape3D_4c5vy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LevelDecorations/StartArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.84739, 0, 0)
+mesh = SubResource("BoxMesh_wcl4m")
 
 [node name="DeathArea" type="Area3D" parent="LevelDecorations"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -43.1694, 0)
@@ -239,6 +250,9 @@ collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LevelDecorations/DeathArea"]
 shape = SubResource("WorldBoundaryShape3D_yq5pp")
+
+[node name="PlayerStartPosition" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.9693, 1.5886, 0)
 
 [connection signal="dash_cooldown_changed" from="Player" to="Player/UI" method="set_new_dash_cooldown_percent"]
 [connection signal="dash_cooldown_percent_added" from="Player" to="Player/UI" method="add_dash_cooldown_percent"]

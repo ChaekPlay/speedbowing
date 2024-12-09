@@ -5,7 +5,7 @@ class_name Player extends CharacterBody3D
 @onready var dash_cooldown = $DashCooldown
 @onready var dash_timer = $DashTimer
 @onready var dash_update_timer: Timer = $DashUpdateTimer
-
+@export var player_start_marker: Marker3D
 signal dash_cooldown_changed(percent_value: float)
 signal dash_cooldown_percent_added(percent_value: float)
 
@@ -24,6 +24,7 @@ var freeze = false
 func _ready() -> void:
 	dash_timer.wait_time = DASH_DURATION
 	dash_cooldown.wait_time = DASH_COOLDOWN
+	position = player_start_marker.position
 	
 
 func _input(event: InputEvent) -> void:

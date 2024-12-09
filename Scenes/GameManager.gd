@@ -32,7 +32,7 @@ func finish_level():
 	ui.finish_level()
 
 func reset_level():
-	get_tree().paused = !get_tree().paused
+	get_tree().paused = false
 	get_tree().reload_current_scene()
 
 func toggle_pause():
