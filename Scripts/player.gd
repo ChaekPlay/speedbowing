@@ -14,6 +14,7 @@ const JUMP_VELOCITY = 6
 const DASH_SPEED = 50
 const DASH_DURATION = 0.3
 const DASH_COOLDOWN = 2
+var can_shoot = false
 var can_dash = true
 var is_dashing = false
 var dash_vector = Vector3()
@@ -24,8 +25,7 @@ var freeze = false
 func _ready() -> void:
 	dash_timer.wait_time = DASH_DURATION
 	dash_cooldown.wait_time = DASH_COOLDOWN
-	position = player_start_marker.position
-	
+	global_position = player_start_marker.global_position
 
 func _input(event: InputEvent) -> void:
 	if freeze:

@@ -40,7 +40,8 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_released("shoot"):
 		if current_power > min_power:
 			print("Current bow strength: "+str(current_power))
-			shoot()
+			if player.can_shoot:
+				shoot()
 		current_power = 0
 		power_changed.emit(current_power / max_power * 100)
 	

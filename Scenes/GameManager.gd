@@ -33,7 +33,7 @@ func finish_level():
 
 func reset_level():
 	get_tree().paused = false
-	get_tree().reload_current_scene()
+	get_tree().call_deferred("reload_current_scene")
 
 func toggle_pause():
 	paused = !paused
@@ -60,6 +60,7 @@ func _on_finish_area_body_entered(body: Node3D) -> void:
 
 func _on_start_area_body_shape_entered(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
 	if body is Player:
+		body.can_shoot = true
 		start_level()
 
 
