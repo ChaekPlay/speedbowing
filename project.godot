@@ -19,6 +19,11 @@ config/icon="res://icon.svg"
 
 SceneManager="*res://Scripts/scene_manager.gd"
 
+[gui]
+
+theme/custom="res://Themes/default_theme.tres"
+theme/custom_font="res://Fonts/RubikMonoOne-Regular.ttf"
+
 [input]
 
 move_forward={

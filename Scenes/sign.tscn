@@ -13,7 +13,7 @@ outline_modulate = Color(0.187176, 0.187176, 0.187176, 1)
 text = "Добро пожаловать в Speedbowing!
 Движение камеры осуществляется мышью
 Для передвижения используйте клавиши W,A,S,D"
-font_size = 24
+font_size = 20
 outline_size = 8
 autowrap_mode = 3
 width = 350.0

@@ -123,6 +123,7 @@ material = ExtResource("9_g406g")
 height = 0.2
 
 [sub_resource type="BoxMesh" id="BoxMesh_47n03"]
+material = ExtResource("8_p0xcw")
 size = Vector3(5, 5, 0.1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a3jan"]
@@ -161,12 +162,12 @@ transform = Transform3D(0.680721, -0.716535, 0.152304, 0, 0.207912, 0.978148, -0
 shadow_enabled = true
 
 [node name="Player" parent="." node_paths=PackedStringArray("player_start_marker") instance=ExtResource("2_yykpr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.8301, 1.41383, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.8301, 2.78188, 0)
 player_start_marker = NodePath("../LevelDecorations/Start/PlayerStartPosition")
 metadata/_edit_group_ = true
 
 [node name="Bow" parent="Player" node_paths=PackedStringArray("player", "projectile_place") instance=ExtResource("3_8xt3t")]
-transform = Transform3D(-0.724816, 5.84618e-08, 0.192723, 0.192723, -5.4373e-08, 0.724816, 7.04707e-08, 0.75, 3.75246e-08, 0.693978, 3.40334, -1.76056)
+transform = Transform3D(-0.318919, 2.57232e-08, 0.084798, 0.084798, -2.39241e-08, 0.318919, 3.10071e-08, 0.33, 1.65108e-08, 0.966171, 2.48178, -1.02552)
 script = ExtResource("4_5xd5v")
 player = NodePath("..")
 arrow = ExtResource("5_k46cx")

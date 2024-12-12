@@ -60,6 +60,7 @@ offset_right = 30.5
 offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 16
 
 [node name="FinalTimeLabel" type="Label" parent="RankScreen/ColorRect/VBoxContainer"]
 layout_mode = 2
@@ -72,6 +73,8 @@ text = "Ранк: A"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="RankScreen/ColorRect/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1
 
 [node name="NextButton" type="Button" parent="RankScreen/ColorRect/VBoxContainer/HBoxContainer"]
 layout_mode = 2
