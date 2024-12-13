@@ -11,4 +11,5 @@ func _process(delta: float) -> void:
 
 
 func _on_quit_button_pressed() -> void:
+	Stats.save_data()
 	get_tree().quit()

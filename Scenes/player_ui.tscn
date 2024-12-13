@@ -67,7 +67,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 text = "Время: 0:00.00"
 
-[node name="Label" type="Label" parent="RankScreen/ColorRect/VBoxContainer"]
+[node name="RankLabel" type="Label" parent="RankScreen/ColorRect/VBoxContainer"]
 layout_mode = 2
 text = "Ранк: A"
 

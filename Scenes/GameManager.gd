@@ -28,8 +28,9 @@ func start_level():
 func finish_level():
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	state = GameState.FINISHED
+	Stats.insert_stat(level_id, level_time)
 	ui.switch_screen(ui.in_game_screen, ui.rank_screen)
-	ui.finish_level()
+	ui.finish_level(level_id, level_time)
 
 func reset_level():
 	get_tree().paused = false
@@ -46,7 +47,8 @@ func toggle_pause():
 	get_tree().paused = !get_tree().paused
 
 func next_level():
-	SceneManager.changeScene("res://Materials/level"+str(level_id+1)+".tres")
+	get_tree().paused = false
+	SceneManager.changeScene("res://Scenes/level"+str(level_id+1)+".tscn")
 	
 func main_menu():
 	get_tree().paused = false

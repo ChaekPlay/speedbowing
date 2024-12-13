@@ -1,11 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://bf21h7hs037fs"]
+[gd_scene load_steps=9 format=3 uid="uid://bf21h7hs037fs"]
 
 [ext_resource type="Script" path="res://Scripts/value_text.gd" id="1_7mwac"]
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_qsbtb"]
+[ext_resource type="Texture2D" uid="uid://4fjpv3dtj0f3" path="res://Textures/bg.png" id="1_swyla"]
 [ext_resource type="Script" path="res://Scripts/main_menu_button.gd" id="2_frkc6"]
 [ext_resource type="Theme" uid="uid://c0i5kkkllcd5h" path="res://Themes/default_theme.tres" id="2_im2xq"]
 [ext_resource type="Script" path="res://Scripts/level_select.gd" id="4_mj7ja"]
 [ext_resource type="Script" path="res://Scripts/level_select_button.gd" id="5_xssrp"]
+[ext_resource type="Script" path="res://Scenes/menu_level.gd" id="7_cxkyu"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -15,8 +17,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_swyla")
+
 [node name="Main" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -118,9 +128,10 @@ text = "Звуки"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Settings/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 32
 
 [node name="SoundRange" type="HSlider" parent="Settings/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -151,9 +162,10 @@ text = "Музыка"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Settings/VBoxContainer/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 32
 
 [node name="MusicRange" type="HSlider" parent="Settings/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 max_value = 10.0
 value = 10.0
@@ -175,6 +187,7 @@ current_menu = NodePath("../..")
 next_menu = NodePath("../../../Main")
 
 [node name="LevelSelect" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -198,13 +211,17 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 32
 
-[node name="HBoxContainer" type="HBoxContainer" parent="LevelSelect/VBoxContainer"]
+[node name="HBoxContainer" type="VBoxContainer" parent="LevelSelect/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 32
 
-[node name="Level1" type="VBoxContainer" parent="LevelSelect/VBoxContainer/HBoxContainer"]
+[node name="Level1" type="VBoxContainer" parent="LevelSelect/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("level_button", "level_name_label", "rank_label")]
 layout_mode = 2
 theme_override_constants/separation = 16
+script = ExtResource("7_cxkyu")
+level_button = NodePath("Button")
+level_name_label = NodePath("LevelName")
+rank_label = NodePath("RankLabel")
 
 [node name="Button" type="Button" parent="LevelSelect/VBoxContainer/HBoxContainer/Level1"]
 layout_mode = 2
@@ -221,14 +238,17 @@ text = "Платформы"
 layout_mode = 2
 text = "0:00.00 (-)"
 
-[node name="Level2" type="VBoxContainer" parent="LevelSelect/VBoxContainer/HBoxContainer"]
+[node name="Level2" type="VBoxContainer" parent="LevelSelect/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("level_button", "level_name_label", "rank_label")]
 layout_mode = 2
 theme_override_constants/separation = 16
+script = ExtResource("7_cxkyu")
+level_button = NodePath("Button")
+level_name_label = NodePath("LevelName")
+rank_label = NodePath("RankLabel")
 
 [node name="Button" type="Button" parent="LevelSelect/VBoxContainer/HBoxContainer/Level2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-disabled = true
 text = "Уровень 2"
 script = ExtResource("5_xssrp")
 level_id = 2
@@ -241,9 +261,13 @@ text = "Платформы"
 layout_mode = 2
 text = "0:00.00 (-)"
 
-[node name="Level3" type="VBoxContainer" parent="LevelSelect/VBoxContainer/HBoxContainer"]
+[node name="Level3" type="VBoxContainer" parent="LevelSelect/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("level_button", "level_name_label", "rank_label")]
 layout_mode = 2
 theme_override_constants/separation = 16
+script = ExtResource("7_cxkyu")
+level_button = NodePath("Button")
+level_name_label = NodePath("LevelName")
+rank_label = NodePath("RankLabel")
 
 [node name="Button" type="Button" parent="LevelSelect/VBoxContainer/HBoxContainer/Level3"]
 layout_mode = 2
@@ -290,5 +314,7 @@ text = "Выбор уровня"
 [connection signal="level_selected" from="LevelSelect/VBoxContainer/HBoxContainer/Level1/Button" to="LevelSelect" method="_on_button_level_selected"]
 [connection signal="pressed" from="LevelSelect/VBoxContainer/HBoxContainer/Level1/Button" to="LevelSelect/VBoxContainer/HBoxContainer/Level1/Button" method="_on_pressed"]
 [connection signal="level_selected" from="LevelSelect/VBoxContainer/HBoxContainer/Level2/Button" to="LevelSelect" method="_on_button_level_selected"]
+[connection signal="pressed" from="LevelSelect/VBoxContainer/HBoxContainer/Level2/Button" to="LevelSelect/VBoxContainer/HBoxContainer/Level2/Button" method="_on_pressed"]
 [connection signal="level_selected" from="LevelSelect/VBoxContainer/HBoxContainer/Level3/Button" to="LevelSelect" method="_on_button_level_selected"]
+[connection signal="pressed" from="LevelSelect/VBoxContainer/HBoxContainer/Level3/Button" to="LevelSelect/VBoxContainer/HBoxContainer/Level3/Button" method="_on_pressed"]
 [connection signal="pressed" from="LevelSelect/VBoxContainer/BackButton" to="LevelSelect/VBoxContainer/BackButton" method="_on_pressed"]

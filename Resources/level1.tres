@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Level" load_steps=2 format=3 uid="uid://bo43ohcsfm2vj"]
+
+[ext_resource type="Script" path="res://Scripts/level.gd" id="1_hjo7r"]
+
+[resource]
+script = ExtResource("1_hjo7r")
+level_id = 1
+name = "Обучение"
+rank_distribution = {
+"A": 10.0,
+"B": 12.0,
+"C": 15.0,
+"D": 30.0
+}

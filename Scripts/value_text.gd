@@ -11,5 +11,5 @@ func _ready() -> void:
 
 
 func _on_sound_range_value_changed(value: float) -> void:
-	text = str(value)
+	text = "%2d" % value
 	pass # Replace with function body.

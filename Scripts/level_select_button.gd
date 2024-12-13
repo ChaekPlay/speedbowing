@@ -1,4 +1,4 @@
-extends Button
+class_name LevelSelectButton extends Button
 
 signal level_selected(level_id: int)
 
