@@ -9,6 +9,7 @@ class_name InGameUI extends Control
 @onready var power_bar: TextureProgressBar = $InGame/PowerBar
 @onready var dash_bar: TextureProgressBar = $InGame/DashBar
 @onready var next_button = $RankScreen/ColorRect/VBoxContainer/HBoxContainer/NextButton
+@onready var select_sound = $SelectSound
 
 signal quitPressed
 signal nextLevelPressed
@@ -44,15 +45,19 @@ func switch_screen(screen1: Control, screen2: Control):
 
 
 func _on_next_button_pressed() -> void:
+	select_sound.play()
 	nextLevelPressed.emit()
 
 
 func _on_quit_button_pressed() -> void:
+	select_sound.play()
 	quitPressed.emit()
 
 
 func _on_resume_button_pressed() -> void:
+	select_sound.play()
 	resumePressed.emit()
 
 func _on_reset_button_pressed() -> void:
+	select_sound.play()
 	resetPressed.emit()

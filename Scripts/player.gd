@@ -6,6 +6,8 @@ class_name Player extends CharacterBody3D
 @onready var dash_timer = $DashTimer
 @onready var dash_update_timer: Timer = $DashUpdateTimer
 @export var player_start_marker: Marker3D
+@onready var dash_sound_player: AudioStreamPlayer = $DashSoundPlayer
+
 signal dash_cooldown_changed(percent_value: float)
 signal dash_cooldown_percent_added(percent_value: float)
 
@@ -52,7 +54,7 @@ func _physics_process(delta: float) -> void:
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	if Input.is_action_just_pressed("dash") and can_dash:
-		#print("dash")
+		dash_sound_player.play()
 		can_dash = false
 		is_dashing = true
 		dash_vector = Vector3()

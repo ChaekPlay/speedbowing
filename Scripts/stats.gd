@@ -1,7 +1,7 @@
 extends Node
 
 var levels: Array[Level] = []
-var level_count = 2
+var level_count = 1
 var player_level_stats = {}
 var save_file = "user://savegame.save"
 
@@ -43,6 +43,7 @@ func save_data():
 	var file = FileAccess.open(save_file, FileAccess.WRITE)
 	var stats = JSON.stringify(player_level_stats)
 	file.store_line(stats)
+	file.close()
 	
 func load_data():
 	if not FileAccess.file_exists(save_file):
@@ -55,4 +56,5 @@ func load_data():
 		print("JSON Parse Error: ", json.get_error_message())
 		return
 	player_level_stats = json.data
+	file.close()
 	

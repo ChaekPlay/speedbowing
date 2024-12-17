@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bf21h7hs037fs"]
+[gd_scene load_steps=11 format=3 uid="uid://bf21h7hs037fs"]
 
 [ext_resource type="Script" path="res://Scripts/value_text.gd" id="1_7mwac"]
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_qsbtb"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" path="res://Scripts/level_select.gd" id="4_mj7ja"]
 [ext_resource type="Script" path="res://Scripts/level_select_button.gd" id="5_xssrp"]
 [ext_resource type="Script" path="res://Scenes/menu_level.gd" id="7_cxkyu"]
+[ext_resource type="AudioStream" uid="uid://wwjttvntdowo" path="res://Audio/button_select.wav" id="9_hqnu7"]
+[ext_resource type="AudioStream" uid="uid://dssqbom1a0tch" path="res://Audio/main_menu.wav" id="10_17tm5"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -26,7 +28,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_swyla")
 
-[node name="Main" type="Control" parent="."]
+[node name="Main" type="Control" parent="." node_paths=PackedStringArray("select_sound")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,6 +36,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qsbtb")
+select_sound = NodePath("../SelectSound")
 
 [node name="Label" type="Label" parent="Main"]
 layout_mode = 1
@@ -63,19 +66,21 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 16
 
-[node name="PlayButton" type="Button" parent="Main/VBoxContainer" node_paths=PackedStringArray("current_menu", "next_menu")]
+[node name="PlayButton" type="Button" parent="Main/VBoxContainer" node_paths=PackedStringArray("select_sound", "current_menu", "next_menu")]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Играть"
 script = ExtResource("2_frkc6")
+select_sound = NodePath("../../../SelectSound")
 current_menu = NodePath("../..")
 next_menu = NodePath("../../../LevelSelect")
 
-[node name="SettingsButton" type="Button" parent="Main/VBoxContainer" node_paths=PackedStringArray("current_menu", "next_menu")]
+[node name="SettingsButton" type="Button" parent="Main/VBoxContainer" node_paths=PackedStringArray("select_sound", "current_menu", "next_menu")]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Настройки"
 script = ExtResource("2_frkc6")
+select_sound = NodePath("../../../SelectSound")
 current_menu = NodePath("../..")
 next_menu = NodePath("../../../Settings")
 
@@ -138,12 +143,14 @@ size_flags_vertical = 4
 max_value = 10.0
 value = 10.0
 
-[node name="ValueText" type="Label" parent="Settings/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="ValueText" type="Label" parent="Settings/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("slider")]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 24
 text = "10"
 script = ExtResource("1_7mwac")
+bus_name = "SFX"
+slider = NodePath("../SoundRange")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Settings/VBoxContainer"]
 layout_mode = 2
@@ -170,19 +177,22 @@ layout_mode = 2
 max_value = 10.0
 value = 10.0
 
-[node name="ValueText" type="Label" parent="Settings/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
+[node name="ValueText" type="Label" parent="Settings/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("slider")]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "10
 "
 script = ExtResource("1_7mwac")
+bus_name = "Music"
+slider = NodePath("../MusicRange")
 
-[node name="BackButton" type="Button" parent="Settings/VBoxContainer" node_paths=PackedStringArray("current_menu", "next_menu")]
+[node name="BackButton" type="Button" parent="Settings/VBoxContainer" node_paths=PackedStringArray("select_sound", "current_menu", "next_menu")]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 32
 text = "Назад"
 script = ExtResource("2_frkc6")
+select_sound = NodePath("../../../SelectSound")
 current_menu = NodePath("../..")
 next_menu = NodePath("../../../Main")
 
@@ -223,11 +233,12 @@ level_button = NodePath("Button")
 level_name_label = NodePath("LevelName")
 rank_label = NodePath("RankLabel")
 
-[node name="Button" type="Button" parent="LevelSelect/VBoxContainer/HBoxContainer/Level1"]
+[node name="Button" type="Button" parent="LevelSelect/VBoxContainer/HBoxContainer/Level1" node_paths=PackedStringArray("select_sound")]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Уровень 1"
 script = ExtResource("5_xssrp")
+select_sound = NodePath("../../../../../SelectSound")
 level_id = 1
 
 [node name="LevelName" type="Label" parent="LevelSelect/VBoxContainer/HBoxContainer/Level1"]
@@ -246,11 +257,12 @@ level_button = NodePath("Button")
 level_name_label = NodePath("LevelName")
 rank_label = NodePath("RankLabel")
 
-[node name="Button" type="Button" parent="LevelSelect/VBoxContainer/HBoxContainer/Level2"]
+[node name="Button" type="Button" parent="LevelSelect/VBoxContainer/HBoxContainer/Level2" node_paths=PackedStringArray("select_sound")]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Уровень 2"
 script = ExtResource("5_xssrp")
+select_sound = NodePath("../../../../../SelectSound")
 level_id = 2
 
 [node name="LevelName" type="Label" parent="LevelSelect/VBoxContainer/HBoxContainer/Level2"]
@@ -269,12 +281,13 @@ level_button = NodePath("Button")
 level_name_label = NodePath("LevelName")
 rank_label = NodePath("RankLabel")
 
-[node name="Button" type="Button" parent="LevelSelect/VBoxContainer/HBoxContainer/Level3"]
+[node name="Button" type="Button" parent="LevelSelect/VBoxContainer/HBoxContainer/Level3" node_paths=PackedStringArray("select_sound")]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 disabled = true
 text = "Уровень 3"
 script = ExtResource("5_xssrp")
+select_sound = NodePath("../../../../../SelectSound")
 level_id = 3
 
 [node name="LevelName" type="Label" parent="LevelSelect/VBoxContainer/HBoxContainer/Level3"]
@@ -285,11 +298,12 @@ text = "Платформы"
 layout_mode = 2
 text = "0:00.00 (-)"
 
-[node name="BackButton" type="Button" parent="LevelSelect/VBoxContainer" node_paths=PackedStringArray("current_menu", "next_menu")]
+[node name="BackButton" type="Button" parent="LevelSelect/VBoxContainer" node_paths=PackedStringArray("select_sound", "current_menu", "next_menu")]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Назад"
 script = ExtResource("2_frkc6")
+select_sound = NodePath("../../../SelectSound")
 current_menu = NodePath("../..")
 next_menu = NodePath("../../../Main")
 
@@ -304,6 +318,15 @@ offset_bottom = 99.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 72
 text = "Выбор уровня"
+
+[node name="SelectSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_hqnu7")
+bus = &"SFX"
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_17tm5")
+autoplay = true
+bus = &"Music"
 
 [connection signal="pressed" from="Main/VBoxContainer/PlayButton" to="Main/VBoxContainer/PlayButton" method="_on_pressed"]
 [connection signal="pressed" from="Main/VBoxContainer/SettingsButton" to="Main/VBoxContainer/SettingsButton" method="_on_pressed"]

@@ -2,6 +2,10 @@ class_name Bow extends Node3D
 @export var player: Player
 @export var arrow: PackedScene
 @export var projectile_place: Node
+
+@onready var increase_power_sound_player: AudioStreamPlayer = $IncreasePowerSoundPlayer
+@onready var shoot_sound_player: AudioStreamPlayer = $ShootSoundPlayer
+
 var max_power = 50
 var current_power = 0
 var power_scaling = 0.5
@@ -13,13 +17,14 @@ func increase_power():
 	if current_power == max_power:
 		return
 	current_power += power_scaling
-	if current_power > max_power:
+	if current_power >= max_power:
+		increase_power_sound_player.play()
 		current_power = max_power
 	power_changed.emit(current_power / max_power * 100)
 
 func shoot():
 	var arrow: Arrow = arrow.instantiate()
-	
+	shoot_sound_player.play()
 	var camera_dir = -player.camera.global_transform.basis.z.normalized()
 	arrow.transform = player.camera.global_transform
 	arrow.translate_object_local(Vector3(0,0,-1))

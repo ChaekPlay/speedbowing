@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://bao3l75rrbbyl"]
+[gd_scene load_steps=49 format=3 uid="uid://bao3l75rrbbyl"]
 
 [ext_resource type="Script" path="res://Scenes/GameManager.gd" id="1_gq1i2"]
 [ext_resource type="PackedScene" uid="uid://dhoby5ehmuk3j" path="res://Scenes/player.tscn" id="2_yykpr"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://Scripts/bow.gd" id="4_5xd5v"]
 [ext_resource type="PackedScene" uid="uid://bqfdparvw0p5w" path="res://Scenes/arrow.tscn" id="5_k46cx"]
 [ext_resource type="PackedScene" uid="uid://c120a378ec0ar" path="res://Scenes/player_ui.tscn" id="6_bpkwe"]
+[ext_resource type="AudioStream" uid="uid://bd5u8sgrp86h6" path="res://Audio/bow_loading.wav" id="6_vgs8p"]
+[ext_resource type="AudioStream" uid="uid://cvlauk4nj6n31" path="res://Audio/bow_release.wav" id="7_8bokx"]
 [ext_resource type="Script" path="res://Scripts/puzzle.gd" id="7_uuett"]
 [ext_resource type="Script" path="res://Scripts/button.gd" id="8_oauxk"]
 [ext_resource type="Material" uid="uid://c3ih0rytag8k3" path="res://Materials/wood.tres" id="8_p0xcw"]
@@ -14,6 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://dsd4ck6eqlclv" path="res://Textures/start_end_area.jpg" id="12_3odu8"]
 [ext_resource type="PackedScene" uid="uid://b01m0mwp65x4d" path="res://Scenes/sign.tscn" id="12_4noe5"]
 [ext_resource type="Material" uid="uid://7qcxuc0qfib6" path="res://Materials/stone_floor.tres" id="14_s0eq6"]
+[ext_resource type="AudioStream" uid="uid://hbirhlp88upt" path="res://Audio/before_game.wav" id="15_0lthl"]
+[ext_resource type="AudioStream" uid="uid://bisgr8mgckdv0" path="res://Audio/speedrun.mp3" id="16_qp24g"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eoiq8"]
 sky_top_color = Color(0.382373, 0.632831, 0.702125, 1)
@@ -172,6 +176,14 @@ script = ExtResource("4_5xd5v")
 player = NodePath("..")
 arrow = ExtResource("5_k46cx")
 projectile_place = NodePath("../../Projectiles")
+
+[node name="IncreasePowerSoundPlayer" type="AudioStreamPlayer" parent="Player/Bow"]
+stream = ExtResource("6_vgs8p")
+bus = &"SFX"
+
+[node name="ShootSoundPlayer" type="AudioStreamPlayer" parent="Player/Bow"]
+stream = ExtResource("7_8bokx")
+bus = &"SFX"
 
 [node name="UI" parent="Player" instance=ExtResource("6_bpkwe")]
 metadata/_edit_use_anchors_ = true
@@ -417,6 +429,17 @@ shape = SubResource("ConcavePolygonShape3D_bk3pl")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.92462, 0.725649, -3.78241)
 sign_text = "На такие платформы так просто не запрыгнуть
 Использвуйте SHIFT для рывка вперед в комбинации с прыжком"
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="BeforeGame" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("15_0lthl")
+autoplay = true
+bus = &"Music"
+
+[node name="InGame" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("16_qp24g")
+bus = &"Music"
 
 [connection signal="dash_cooldown_changed" from="Player" to="Player/UI" method="set_new_dash_cooldown_percent"]
 [connection signal="dash_cooldown_percent_added" from="Player" to="Player/UI" method="add_dash_cooldown_percent"]

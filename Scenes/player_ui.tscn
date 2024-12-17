@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c120a378ec0ar"]
+[gd_scene load_steps=11 format=3 uid="uid://c120a378ec0ar"]
 
 [ext_resource type="Script" path="res://Scripts/in_game_ui.gd" id="1_v235v"]
 [ext_resource type="Texture2D" uid="uid://xwvrb2ir6vec" path="res://Textures/crosshair.png" id="2_as0ai"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ctyho5j3w4bo" path="res://Textures/fill power bar.png" id="4_anksj"]
 [ext_resource type="Texture2D" uid="uid://dt3mw5rd6aedv" path="res://Textures/dash_empty.png" id="5_3kj26"]
 [ext_resource type="Texture2D" uid="uid://c8xhof8f4axqa" path="res://Textures/dash_filled.png" id="6_gaqsx"]
+[ext_resource type="AudioStream" uid="uid://wwjttvntdowo" path="res://Audio/button_select.wav" id="7_jwavd"]
 
 [sub_resource type="Gradient" id="Gradient_ndsow"]
 offsets = PackedFloat32Array(0, 0.650602, 1)
@@ -211,6 +212,10 @@ text = "Перезапуск уровня"
 [node name="QuitButton" type="Button" parent="PauseScreen/ColorRect/VBoxContainer"]
 layout_mode = 2
 text = "Выйти в меню"
+
+[node name="SelectSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_jwavd")
+bus = &"SFX"
 
 [connection signal="pressed" from="RankScreen/ColorRect/VBoxContainer/HBoxContainer/NextButton" to="." method="_on_next_button_pressed"]
 [connection signal="pressed" from="RankScreen/ColorRect/VBoxContainer/HBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

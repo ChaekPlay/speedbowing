@@ -8,6 +8,9 @@ enum GameState{
 
 @export var level_id = -1
 @export var ui: InGameUI
+@onready var before_game_player: AudioStreamPlayer = $Audio/BeforeGame
+@onready var in_game_player: AudioStreamPlayer = $Audio/InGame
+
 var state = GameState.NOT_STARTED
 var level_time: float = 0
 var paused: bool = false
@@ -24,6 +27,8 @@ func _process(delta: float) -> void:
 	
 func start_level():
 	state = GameState.INGAME
+	before_game_player.stop()
+	in_game_player.play()
 	
 func finish_level():
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -31,6 +36,8 @@ func finish_level():
 	Stats.insert_stat(level_id, level_time)
 	ui.switch_screen(ui.in_game_screen, ui.rank_screen)
 	ui.finish_level(level_id, level_time)
+	in_game_player.stop()
+	before_game_player.play()
 
 func reset_level():
 	get_tree().paused = false

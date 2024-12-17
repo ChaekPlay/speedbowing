@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dhoby5ehmuk3j"]
+[gd_scene load_steps=7 format=3 uid="uid://dhoby5ehmuk3j"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_mxumx"]
 [ext_resource type="PackedScene" uid="uid://cyxb1lqdeh8ij" path="res://Scenes/player_character.tscn" id="3_xkri1"]
+[ext_resource type="AudioStream" uid="uid://d0di35c88r0em" path="res://Audio/dash.ogg" id="4_3wc5n"]
 [ext_resource type="Script" path="res://Scenes/player_camera.gd" id="5_dlc45"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_lmyow"]
@@ -47,6 +48,10 @@ one_shot = true
 
 [node name="DashUpdateTimer" type="Timer" parent="."]
 wait_time = 0.1
+
+[node name="DashSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_3wc5n")
+bus = &"SFX"
 
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
