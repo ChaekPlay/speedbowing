@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dhoby5ehmuk3j"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_mxumx"]
-[ext_resource type="PackedScene" uid="uid://cyxb1lqdeh8ij" path="res://Scenes/player_character.tscn" id="3_xkri1"]
+[ext_resource type="PackedScene" uid="uid://cf5f6eco572si" path="res://Scenes/character_model.tscn" id="3_eb2nn"]
 [ext_resource type="AudioStream" uid="uid://d0di35c88r0em" path="res://Audio/dash.ogg" id="4_3wc5n"]
 [ext_resource type="Script" path="res://Scenes/player_camera.gd" id="5_dlc45"]
 
@@ -17,7 +17,7 @@ collision_layer = 2
 script = ExtResource("1_mxumx")
 
 [node name="PlayerCamera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0292433, 2.90895, -0.622225)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0292433, 2.90895, -1.62223)
 current = true
 fov = 90.0
 script = ExtResource("5_dlc45")
@@ -29,12 +29,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.71945, 0)
 visible = false
 mesh = SubResource("CapsuleMesh_lmyow")
 
-[node name="Anime_character" parent="." instance=ExtResource("3_xkri1")]
-transform = Transform3D(-0.005, 0, -4.37114e-10, 0, 0.005, 0, 4.37114e-10, 0, -0.005, 0, 0, 0)
-
 [node name="PlayerCollider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0473804, 1.66612, -0.0656128)
 shape = SubResource("BoxShape3D_c7mau")
+
+[node name="Character" parent="." instance=ExtResource("3_eb2nn")]
 
 [node name="RankScreenCamera" type="Camera3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.38073, 2.53233, -3.35156)

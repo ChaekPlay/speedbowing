@@ -65,6 +65,8 @@ func _on_finish_area_body_entered(body: Node3D) -> void:
 	if body is Player:
 		body.freeze = true
 		body.rank_camera.make_current()
+		body.character.play_idle()
+		body.bow.visible = false
 		finish_level()
 
 func _on_start_area_body_shape_entered(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:

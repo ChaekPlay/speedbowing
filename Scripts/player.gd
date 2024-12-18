@@ -6,7 +6,9 @@ class_name Player extends CharacterBody3D
 @onready var dash_timer = $DashTimer
 @onready var dash_update_timer: Timer = $DashUpdateTimer
 @export var player_start_marker: Marker3D
+@onready var bow: Bow = $Bow
 @onready var dash_sound_player: AudioStreamPlayer = $DashSoundPlayer
+@onready var character: CharacterModel = $Character
 
 signal dash_cooldown_changed(percent_value: float)
 signal dash_cooldown_percent_added(percent_value: float)
@@ -53,6 +55,8 @@ func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
+	handle_animation(input_dir)
+	
 	if Input.is_action_just_pressed("dash") and can_dash:
 		dash_sound_player.play()
 		can_dash = false
@@ -81,6 +85,11 @@ func _physics_process(delta: float) -> void:
 	camera.rotation_degrees.x = cam_vector.x
 	rotation_degrees.y = cam_vector.y
 
+func handle_animation(input_dir):
+	if input_dir.y == 0 and input_dir.x == 0:
+		character.play_idle()
+	else:
+		character.play_running()
 
 func _on_dash_timer_timeout():
 	is_dashing = false
